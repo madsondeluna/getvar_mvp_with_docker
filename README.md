@@ -84,7 +84,7 @@ Certifique-se de ter as seguintes ferramentas instaladas:
 1. Clone o repositório:
 
    ```bash
-   git clone https://github.com/madsondeluna/getvar_mvp_with_docker_alfa_with_docker_alfa.git
+   git clone https://github.com/madsondeluna/getvar_mvp_with_docker_alfa.git
    cd getvar_mvp_with_docker_alfa
    ```
 
