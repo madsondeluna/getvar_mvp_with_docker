@@ -1,4 +1,4 @@
-# GET<i>Var</i> 🧬👨🏻‍💻
+# GET<i>Var</i> (with Docker) 🧬👨🏻‍💻
 
 O **GET<i>Var</i>** (MVP with Docker) é uma ferramenta desenvolvida para **análise e anotação de variantes genéticas**. Com um workflow eficiente, a ferramenta integra dados de variantes genômicas para identificar e interpretar anotações de variantes de forma rápida e precisa em bancos de dados públicos.
 
