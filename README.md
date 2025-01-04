@@ -1,6 +1,12 @@
-# GET<i>Var</i> 🧬👨🏻‍💻
+# GET<i>Var</i> (with Docker, but sitll in development and tests) 🧬👨🏻‍💻
 
-O **GET<i>Var</i>** é uma ferramenta desenvolvida para **análise e anotação de variantes genéticas**. Com um workflow eficiente, a ferramenta integra dados de variantes genômicas para identificar e interpretar anotações de variantes de forma rápida e precisa em bancos de dados públicos.
+⚠️ **Atenção: Versão Alfa**
+
+O **GETVar** está atualmente em sua **versão alfa**, o que significa que ele ainda está em estágio inicial de desenvolvimento. Essa versão pode apresentar erros, instabilidades ou comportamentos inesperados durante sua execução. Recomendamos que seu uso seja realizado com cautela e que feedbacks sobre problemas encontrados sejam enviados para ajudar na evolução da ferramenta.
+
+---
+
+O **GETVar** é uma ferramenta desenvolvida para **análise e anotação de variantes genéticas**. Com um workflow eficiente, a ferramenta integra dados de variantes genômicas para identificar e interpretar anotações de variantes de forma rápida e precisa em bancos de dados públicos.
 
 ## Funcionalidades
 
@@ -26,7 +32,7 @@ O **GET<i>Var</i>** é uma ferramenta desenvolvida para **análise e anotação 
      - **Most Severe Consequence**: Consequência mais grave da variante em relação à função do gene.
      - **Clinical Significance**: Relevância clínica da variante com base em dados de referência.
      - **Synonyms**: Nomes alternativos ou identificadores da variante.
-     - **Ambiguity**: Nível de ambiguïdade na identificação da variante.
+     - **Ambiguity**: Nível de ambiguidade na identificação da variante.
      - **Minor Allele**: Alelo menos frequente encontrado na população.
      - **Mappings**: Informações adicionais de diferentes bancos e referências genômicas.
 
@@ -41,10 +47,16 @@ O **GET<i>Var</i>** é uma ferramenta desenvolvida para **análise e anotação 
 - **Linguagem**: Python
 - **Framework**: Snakemake, Bootstrap e Flask
 - **Bancos de Dados**: Integrações com dbSNP, ClinVar e Ensembl
+- **Docker**: Para contêinerização e execução do projeto.
+- **Pandas**: Biblioteca Python para análise de dados.
+- **NumPy**: Suporte para operações numéricas e manipulação de arrays.
+- **Requests**: Para chamadas HTTP às APIs REST (dbSNP, ClinVar, Ensembl).
+- **PySAM**: Manipulação de arquivos BAM/VCF.
+- **AioHTTP**: Para chamadas assíncronas.
 
 ## Estrutura do Projeto
 
-- **`main.py`**: Arquivo principal para executar a aplicação.
+- **`main.py`**: Ponto de entrada principal para executar a aplicação Flask.
 - **`api_getters.py`**: Contém funções para integrar e buscar dados externos.
 - **`views.py`**: Gerencia as rotas e interações do usuário.
 - **`utils.py`**: Arquivo com funções auxiliares para processamento de dados.
@@ -63,6 +75,9 @@ Certifique-se de ter as seguintes ferramentas instaladas:
 
 - Python >= 3.8
 - Gerenciador de pacotes `pip`
+- Docker (opcional, para execução com contêineres).
+- Virtualenv (para criar ambientes isolados de Python, opcional).
+- Acesso às chaves de API para os bancos de dados utilizados (dbSNP, ClinVar, Ensembl).
 
 ## Instalação
 
@@ -80,29 +95,149 @@ Certifique-se de ter as seguintes ferramentas instaladas:
    source venv/bin/activate
    ```
 
-3. Instale o Snakemake:
+3. Instale as dependências:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Instale o Snakemake:
 
    ```bash
    pip install snakemake
    ```
 
-## Execução
+## Fluxo com Snakemake
 
-1. Execute o snakemake:
- ```bash
+O projeto utiliza Snakemake para gerenciar seu pipeline. O fluxo principal inclui as seguintes etapas:
+
+1. **Instalação de Dependências**:
+   ```bash
+   snakemake install_dependencies
+   ```
+
+2. **Execução do Flask**:
+   ```bash
+   snakemake run_flask
+   ```
+
+3. **Fluxo Completo**:
+   ```bash
    snakemake
    ```
 
-2. Acesse a aplicação no navegador em:
- ```
-   http://localhost:5000
+## Configuração do Arquivo `.env`
+
+O arquivo `.env` é utilizado para configurar variáveis de ambiente necessárias para o funcionamento da aplicação. Crie um arquivo `.env` na raiz do projeto com o seguinte conteúdo de exemplo:
+
+```
+FLASK_ENV=production
+SNAKEMAKE_THREADS=4
+DBSNP_API_KEY=your_dbsnp_api_key
+CLINVAR_API_KEY=your_clinvar_api_key
+ENSEMBL_API_KEY=your_ensembl_api_key
+```
+
+- **`FLASK_ENV`**: Define o ambiente de execução (ex.: `development`, `production`).
+- **`SNAKEMAKE_THREADS`**: Quantidade de threads utilizadas pelo Snakemake.
+- **`DBSNP_API_KEY`**, **`CLINVAR_API_KEY`**, **`ENSEMBL_API_KEY`**: Chaves de acesso para integração com os respectivos bancos de dados.
+
+## Execução com Docker
+
+O projeto inclui um `Dockerfile` configurado para facilitar a execução. Siga as etapas abaixo:
+
+### 1. Construir a Imagem
+
+```bash
+docker build -t getvar_mvp .
+```
+
+### 2. Executar o Container
+
+```bash
+docker run -d -p 5000:5000 --env-file .env --name getvar_mvp_container getvar_mvp
+```
+
+### Detalhes do Comando:
+- **`-d`**: Executa o container em modo "detached" (em segundo plano).
+- **`-p 5000:5000`**: Mapeia a porta 5000 do container para a porta 5000 do host.
+- **`--env-file .env`**: Passa variáveis de ambiente definidas no arquivo `.env`.
+- **`--name getvar_mvp_container`**: Nomeia o container como `getvar_mvp_container`.
+
+### 3. Verificar Logs
+
+```bash
+docker logs getvar_mvp_container
+```
+
+### 4. Testar a Aplicação
+
+Acesse a aplicação no navegador em:
+
+```
+http://localhost:5000
+```
+
+### 5. Gerenciar o Container
+
+#### Parar o Container:
+
+```bash
+docker stop getvar_mvp_container
+```
+
+#### Reiniciar o Container:
+
+```bash
+docker start getvar_mvp_container
+```
+
+#### Remover o Container:
+
+```bash
+docker rm getvar_mvp_container
+```
+
+## Contribuição
+
+Contribuições são bem-vindas! Siga as etapas abaixo para contribuir com o projeto:
+
+1. **Fork do Repositório**:
+   Crie um fork do repositório em sua conta do GitHub.
+
+2. **Clone o Repositório**:
+   ```bash
+   git clone https://github.com/sua-conta/getvar_mvp.git
+   cd getvar_mvp
    ```
+
+3. **Crie uma Nova Branch**:
+   ```bash
+   git checkout -b minha-contribuicao
+   ```
+
+4. **Implemente as Alterações**:
+   Realize as modificações desejadas no código.
+
+5. **Faça o Commit das Alterações**:
+   ```bash
+   git add .
+   git commit -m "Descrição das alterações"
+   ```
+
+6. **Envie as Alterações para o seu Fork**:
+   ```bash
+   git push origin minha-contribuicao
+   ```
+
+7. **Abra um Pull Request**:
+   Acesse o repositório original no GitHub e abra um Pull Request com suas alterações.
 
 ## Exemplo de Uso
 
-Submeta um arquivo **VCF** através da interface web. O sistema processará os dados, realizará as anotações e disponibilizará um relatório final em formato tabular que pode ser filtrada através das respectivas anotações. 
+Submeta um arquivo **VCF** através da interface web. O sistema processará os dados, realizará as anotações e disponibilizará um relatório final em formato tabular que pode ser filtrado através das respectivas anotações. 
 
-## Informaçõs Adicionais de Uso 
+## Informações Adicionais de Uso
 
 As APIs REST do dbSNP, ClinVar e Ensembl possuem um limite de até 30 requisições por solicitação. Por isso, a aplicação pode apresentar instabilidade ou lentidão em alguns momentos. Além disso, os servidores dessas plataformas ocasionalmente podem ficar instáveis ou não responder adequadamente às requisições. Nesses casos, o manual das APIs recomenda a resubmissão dos dados para completar o processo de anotação.
 
@@ -113,7 +248,8 @@ Este projeto está licenciado sob a [Licença MIT](https://opensource.org/licens
 ## Contato
 
 Madson Aragão\
-[madsondeluna@gmail.com](mailto\:madsondeluna@gmail.com)\
+[madsondeluna@gmail.com](mailto:madsondeluna@gmail.com)\
 [LinkedIn](https://www.linkedin.com/in/madsonaragao)
 
-🌟 <i>Created by Madson Aragão in somewhere, where bytes and biomolecules collide.</i>
+🌟 Created by Madson Aragão in somewhere, where bytes and biomolecules collide.
+
