@@ -1,6 +1,12 @@
 # GET<i>Var</i> (with Docker) 🧬👨🏻‍💻
 
-O **GET<i>Var</i>** (MVP with Docker) é uma ferramenta desenvolvida para **análise e anotação de variantes genéticas**. Com um workflow eficiente, a ferramenta integra dados de variantes genômicas para identificar e interpretar anotações de variantes de forma rápida e precisa em bancos de dados públicos.
+⚠️ **Atenção: Versão Alfa**
+
+O **GETVar** está atualmente em sua **versão alfa**, o que significa que ele ainda está em estágio inicial de desenvolvimento. Essa versão pode apresentar erros, instabilidades ou comportamentos inesperados durante sua execução. Recomendamos que seu uso seja realizado com cautela e que feedbacks sobre problemas encontrados sejam enviados para ajudar na evolução da ferramenta.
+
+---
+
+O **GETVar** é uma ferramenta desenvolvida para **análise e anotação de variantes genéticas**. Com um workflow eficiente, a ferramenta integra dados de variantes genômicas para identificar e interpretar anotações de variantes de forma rápida e precisa em bancos de dados públicos.
 
 ## Funcionalidades
 
@@ -45,10 +51,12 @@ O **GET<i>Var</i>** (MVP with Docker) é uma ferramenta desenvolvida para **aná
 - **Pandas**: Biblioteca Python para análise de dados.
 - **NumPy**: Suporte para operações numéricas e manipulação de arrays.
 - **Requests**: Para chamadas HTTP às APIs REST (dbSNP, ClinVar, Ensembl).
+- **PySAM**: Manipulação de arquivos BAM/VCF.
+- **AioHTTP**: Para chamadas assíncronas.
 
 ## Estrutura do Projeto
 
-- **`main.py`**: Arquivo principal para executar a aplicação.
+- **`main.py`**: Ponto de entrada principal para executar a aplicação Flask.
 - **`api_getters.py`**: Contém funções para integrar e buscar dados externos.
 - **`views.py`**: Gerencia as rotas e interações do usuário.
 - **`utils.py`**: Arquivo com funções auxiliares para processamento de dados.
@@ -97,6 +105,25 @@ Certifique-se de ter as seguintes ferramentas instaladas:
 
    ```bash
    pip install snakemake
+   ```
+
+## Fluxo com Snakemake
+
+O projeto utiliza Snakemake para gerenciar seu pipeline. O fluxo principal inclui as seguintes etapas:
+
+1. **Instalação de Dependências**:
+   ```bash
+   snakemake install_dependencies
+   ```
+
+2. **Execução do Flask**:
+   ```bash
+   snakemake run_flask
+   ```
+
+3. **Fluxo Completo**:
+   ```bash
+   snakemake
    ```
 
 ## Configuração do Arquivo `.env`
@@ -224,5 +251,5 @@ Madson Aragão\
 [madsondeluna@gmail.com](mailto:madsondeluna@gmail.com)\
 [LinkedIn](https://www.linkedin.com/in/madsonaragao)
 
-🌟 <i>Created by Madson Aragão in somewhere, where bytes and biomolecules collide.</i>
+🌟 Created by Madson Aragão in somewhere, where bytes and biomolecules collide.
 
