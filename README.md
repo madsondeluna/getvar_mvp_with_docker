@@ -106,41 +106,18 @@ Certifique-se de ter as seguintes ferramentas instaladas:
    ```bash
    pip install snakemake
    ```
+## Execução (sem o Docker)
 
-## Fluxo com Snakemake
-
-O projeto utiliza Snakemake para gerenciar seu pipeline. O fluxo principal inclui as seguintes etapas:
-
-1. **Instalação de Dependências**:
-   ```bash
-   snakemake install_dependencies
-   ```
-
-2. **Execução do Flask**:
-   ```bash
-   snakemake run_flask
-   ```
-
-3. **Fluxo Completo**:
-   ```bash
+1. Execute o snakemake:
+ ```bash
    snakemake
    ```
 
-## Configuração do Arquivo `.env`
+2. Acesse a aplicação no navegador em:
+ ```
+   http://localhost:5000
+   ```
 
-O arquivo `.env` é utilizado para configurar variáveis de ambiente necessárias para o funcionamento da aplicação. Crie um arquivo `.env` na raiz do projeto com o seguinte conteúdo de exemplo:
-
-```
-FLASK_ENV=production
-SNAKEMAKE_THREADS=4
-DBSNP_API_KEY=your_dbsnp_api_key
-CLINVAR_API_KEY=your_clinvar_api_key
-ENSEMBL_API_KEY=your_ensembl_api_key
-```
-
-- **`FLASK_ENV`**: Define o ambiente de execução (ex.: `development`, `production`).
-- **`SNAKEMAKE_THREADS`**: Quantidade de threads utilizadas pelo Snakemake.
-- **`DBSNP_API_KEY`**, **`CLINVAR_API_KEY`**, **`ENSEMBL_API_KEY`**: Chaves de acesso para integração com os respectivos bancos de dados.
 
 ## Execução com Docker
 
