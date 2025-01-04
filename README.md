@@ -84,8 +84,8 @@ Certifique-se de ter as seguintes ferramentas instaladas:
 1. Clone o repositório:
 
    ```bash
-   git clone https://github.com/madsondeluna/getvar_mvp.git
-   cd getvar_mvp
+   git clone https://github.com/madsondeluna/getvar_mvp_with_docker_alfa_with_docker_alfa.git
+   cd getvar_mvp_with_docker_alfa
    ```
 
 2. Crie um ambiente virtual (opcional, mas é recomendado):
@@ -149,25 +149,25 @@ O projeto inclui um `Dockerfile` configurado para facilitar a execução. Siga a
 ### 1. Construir a Imagem
 
 ```bash
-docker build -t getvar_mvp .
+docker build -t getvar_mvp_with_docker_alfa .
 ```
 
 ### 2. Executar o Container
 
 ```bash
-docker run -d -p 5000:5000 --env-file .env --name getvar_mvp_container getvar_mvp
+docker run -d -p 5000:5000 --env-file .env --name getvar_mvp_with_docker_alfa_container getvar_mvp_with_docker_alfa
 ```
 
 ### Detalhes do Comando:
 - **`-d`**: Executa o container em modo "detached" (em segundo plano).
 - **`-p 5000:5000`**: Mapeia a porta 5000 do container para a porta 5000 do host.
 - **`--env-file .env`**: Passa variáveis de ambiente definidas no arquivo `.env`.
-- **`--name getvar_mvp_container`**: Nomeia o container como `getvar_mvp_container`.
+- **`--name getvar_mvp_with_docker_alfa_container`**: Nomeia o container como `getvar_mvp_with_docker_alfa_container`.
 
 ### 3. Verificar Logs
 
 ```bash
-docker logs getvar_mvp_container
+docker logs getvar_mvp_with_docker_alfa_container
 ```
 
 ### 4. Testar a Aplicação
@@ -183,19 +183,19 @@ http://localhost:5000
 #### Parar o Container:
 
 ```bash
-docker stop getvar_mvp_container
+docker stop getvar_mvp_with_docker_alfa_container
 ```
 
 #### Reiniciar o Container:
 
 ```bash
-docker start getvar_mvp_container
+docker start getvar_mvp_with_docker_alfa_container
 ```
 
 #### Remover o Container:
 
 ```bash
-docker rm getvar_mvp_container
+docker rm getvar_mvp_with_docker_alfa_container
 ```
 
 ## Contribuição
@@ -207,8 +207,8 @@ Contribuições são bem-vindas! Siga as etapas abaixo para contribuir com o pro
 
 2. **Clone o Repositório**:
    ```bash
-   git clone https://github.com/sua-conta/getvar_mvp.git
-   cd getvar_mvp
+   git clone https://github.com/sua-conta/getvar_mvp_with_docker_alfa.git
+   cd getvar_mvp_with_docker_alfa
    ```
 
 3. **Crie uma Nova Branch**:
